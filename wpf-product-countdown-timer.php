@@ -87,7 +87,7 @@ class WPFound_Product_Countdown_Timer {
         add_filter( 'woocommerce_product_data_tabs', [ $this, 'wpfpct_countdown_timer_tab' ] );
         add_action( 'woocommerce_product_data_panels', [ $this, 'wpfpct_countdown_timer_product_data_panels' ] );
         add_action( 'woocommerce_process_product_meta', [ $this, 'wpfpct_countdown_timer_save_fields' ] );
-        add_action( 'woocommerce_single_product_summary', [ $this, 'wpfpct_display_countdown_timer' ], 30);
+        add_action( 'woocommerce_single_product_summary', [ $this, 'wpfpct_display_countdown_timer' ], 20);
         add_action( 'wp_enqueue_scripts', array( $this, 'wpfpct_load_enqueue' ) );
     }
 
