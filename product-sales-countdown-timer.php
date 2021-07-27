@@ -1,12 +1,14 @@
 <?php
 /**
- * Plugin Name:       Product Sales Countdown Timer
- * Description:       Product Sales Countdown Timer plugin helps you display for single product page.
+ * Plugin Name:       WPF Product Countdown Timer
+ * Plugin URI:        https://github.com/arif123456/wpf-product-countdown-timer
+ * Description:       WPF Product Countdown Timer plugin helps you display for single product page.
  * Version:           1.0
- * Author:            Ariful Islam
+ * Author:            WPFound
+ * Author             https://github.com/arif123456
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       product-sales-countdown-timer
+ * Text Domain:       wpf-product-countdown-timer
  */
 
 // don't call the file directly
@@ -15,11 +17,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Product_Sales_Countdown_Timer class
+ * WPFound_Product_Countdown_Timer class
  *
- * @class Product_Sales_Countdown_Timer The class that holds the entire Product_Sales_Countdown_Timer plugin
+ * @class WPFound_Product_Countdown_Timer The class that holds the entire WPFound_Product_Countdown_Timer plugin
  */
-class Product_Sales_Countdown_Timer {
+class WPFound_Product_Countdown_Timer {
 
     /**
      * Singleton pattern
@@ -29,9 +31,9 @@ class Product_Sales_Countdown_Timer {
     private static $instance = false;
     
     /**
-     * Initializes the Product_Sales_Countdown_Timer class
+     * Initializes the WPFound_Product_Countdown_Timer class
      *
-     * Checks for an existing Product_Sales_Countdown_Timer instance
+     * Checks for an existing WPFound_Product_Countdown_Timer instance
      * and if it cant't find one, then creates it.
      */
     public static function init() {
@@ -44,7 +46,7 @@ class Product_Sales_Countdown_Timer {
     }
 
     /**
-     * Constructor for the Product_Sales_Countdown_Timer class
+     * Constructor for the WPFound_Product_Countdown_Timer class
      *
      * Sets up all the appropriate hooks and actions
      * within our plugin.
@@ -69,8 +71,8 @@ class Product_Sales_Countdown_Timer {
      * @return void
      */
     public function define_constants() {
-        define( 'PSCT_DIR_FILE', plugin_dir_url( __FILE__ ) );
-        define( 'PSCT_ASSETS', PSCT_DIR_FILE . '/assets' );
+        define( 'WPFPCT_DIR_FILE', plugin_dir_url( __FILE__ ) );
+        define( 'WPFPCT_ASSETS', WPFPCT_DIR_FILE . '/assets' );
     }
 
     /**
@@ -82,11 +84,11 @@ class Product_Sales_Countdown_Timer {
      * @return void
      */
     public function includes() {
-        add_filter( 'woocommerce_product_data_tabs', [ $this, 'psct_countdown_timer_tab' ] );
-        add_action( 'woocommerce_product_data_panels', [ $this, 'psct_countdown_timer_product_data_panels' ] );
-        add_action( 'woocommerce_process_product_meta', [ $this, 'psct_countdown_timer_save_fields' ] );
-        add_action( 'woocommerce_single_product_summary', [ $this, 'psct_display_countdown_timer' ], 30);
-        add_action( 'wp_enqueue_scripts', array( $this, 'psct_load_enqueue' ) );
+        add_filter( 'woocommerce_product_data_tabs', [ $this, 'wpfpct_countdown_timer_tab' ] );
+        add_action( 'woocommerce_product_data_panels', [ $this, 'wpfpct_countdown_timer_product_data_panels' ] );
+        add_action( 'woocommerce_process_product_meta', [ $this, 'wpfpct_countdown_timer_save_fields' ] );
+        add_action( 'woocommerce_single_product_summary', [ $this, 'wpfpct_display_countdown_timer' ], 30);
+        add_action( 'wp_enqueue_scripts', array( $this, 'wpfpct_load_enqueue' ) );
     }
 
     /**
@@ -96,10 +98,10 @@ class Product_Sales_Countdown_Timer {
      *
      * @return void
     */
-    public function psct_countdown_timer_tab( $product_data_tabs ) {
-        $product_data_tabs['psct_tab'] = array(
-            'label'     =>  __( 'Product Countdown', 'product-sales-countdown-timer' ),
-            'target'    => 'psct_tab_settings',
+    public function wpfpct_countdown_timer_tab( $product_data_tabs ) {
+        $product_data_tabs['wpfound_tab'] = array(
+            'label'     =>  __( 'Product Countdown', 'wpf-product-countdown-timer' ),
+            'target'    => 'wpfound_tab_settings',
         );
         return $product_data_tabs;
     }
@@ -111,37 +113,37 @@ class Product_Sales_Countdown_Timer {
      *
      * @return void
     */
-    public function psct_countdown_timer_product_data_panels() {
+    public function wpfpct_countdown_timer_product_data_panels() {
         ?>
-            <div id='psct_tab_settings' class='panel woocommerce_options_panel'>
+            <div id='wpfound_tab_settings' class='panel woocommerce_options_panel'>
                 <div class='options_group'>
                     <?php
 
                         woocommerce_wp_checkbox( array(
-                            'id' 		=> '_enable_timer',
-                            'label' 	=> __( 'Enable Timer', 'product-sales-countdown-timer' ),
+                            'id' 		=> 'wpfound_enable_timer',
+                            'label' 	=> __( 'Enable Timer', 'wpf-product-countdown-timer' ),
                         ) );
 
                         woocommerce_wp_text_input( array(
-                            'id'				=> '_valid_for_timer_text',
-                            'label'				=> __( 'Timer Heading Text', 'product-sales-countdown-timer' ),
+                            'id'				=> 'wpfound_timer_heading_text',
+                            'label'				=> __( 'Timer Heading Text', 'wpf-product-countdown-timer' ),
                             'desc_tip'			=> 'true',
-                            'description'		=> __( 'Enter timer header text', 'product-sales-countdown-timer' ),
+                            'description'		=> __( 'Enter timer header text', 'wpf-product-countdown-timer' ),
                             'type' 				=> 'text',
                         ) );
 
                         woocommerce_wp_text_input( array(
-                            'id'				=> '_valid_for_date',
-                            'label'				=> __( 'End Date', 'product-sales-countdown-timer' ),
+                            'id'				=> 'wpfound_date_range',
+                            'label'				=> __( 'End Date', 'wpf-product-countdown-timer' ),
                             'desc_tip'			=> 'true',
-                            'description'		=> __( 'Enter the end date here countdown for product sales', 'product-sales-countdown-timer' ),
+                            'description'		=> __( 'Enter the end date here countdown for product sales', 'wpf-product-countdown-timer' ),
                             'type' 				=> 'date',
                         ) );
                         woocommerce_wp_text_input( array(
-                            'id'				=> '_valid_for_date_time',
-                            'label'				=> __( 'Time', 'product-sales-countdown-timer' ),
+                            'id'				=> 'wpfound_date_time',
+                            'label'				=> __( 'Time', 'wpf-product-countdown-timer' ),
                             'desc_tip'			=> 'true',
-                            'description'		=> __( 'Enter the end date here countdown for product sales', 'product-sales-countdown-timer' ),
+                            'description'		=> __( 'Enter the end date here countdown for product sales', 'wpf-product-countdown-timer' ),
                             'type' 				=> 'time',
                         ) );
 
@@ -158,16 +160,16 @@ class Product_Sales_Countdown_Timer {
      *
      * @return void
     */
-    public function psct_countdown_timer_save_fields( $post_id ) {
-        $valid_for_date         = isset( $_POST[ '_valid_for_date' ] ) ? sanitize_text_field( wp_unslash( $_POST[ '_valid_for_date' ] ) ) : '';
-        $valid_for_date_time    = isset( $_POST[ '_valid_for_date_time' ] ) ? sanitize_text_field( wp_unslash( $_POST[ '_valid_for_date_time' ] )  ) : '';
-        $valid_for_head_text    = isset( $_POST[ '_valid_for_timer_text' ] ) ? sanitize_text_field( wp_unslash( $_POST[ '_valid_for_timer_text' ] )  ) : '';
-        $enable_timer           = isset($_POST['_enable_timer']) ? 'yes' : 'no';
+    public function wpfpct_countdown_timer_save_fields( $post_id ) {
+        $wpfound_date_range             = isset( $_POST[ 'wpfound_date_range' ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wpfound_date_range' ] ) ) : '';
+        $wpfound_date_time              = isset( $_POST[ 'wpfound_date_time' ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wpfound_date_time' ] )  ) : '';
+        $wpfound_timer_heading_text     = isset( $_POST[ 'wpfound_timer_heading_text' ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wpfound_timer_heading_text' ] )  ) : '';
+        $wpfound_enable_timer           = isset($_POST['wpfound_enable_timer']) ? 'yes' : 'no';
 
-        update_post_meta( $post_id, '_valid_for_date', esc_attr( $valid_for_date ) );
-        update_post_meta( $post_id, '_valid_for_date_time',  esc_attr( $valid_for_date_time ) );
-        update_post_meta( $post_id, '_valid_for_timer_text',  esc_attr( $valid_for_head_text ) );
-        update_post_meta( $post_id, '_enable_timer',  esc_attr( $enable_timer ) );
+        update_post_meta( $post_id, 'wpfound_date_range', esc_attr( $wpfound_date_range ) );
+        update_post_meta( $post_id, 'wpfound_date_time',  esc_attr( $wpfound_date_time ) );
+        update_post_meta( $post_id, 'wpfound_timer_heading_text',  esc_attr( $wpfound_timer_heading_text ) );
+        update_post_meta( $post_id, 'wpfound_enable_timer',  esc_attr( $wpfound_enable_timer ) );
         
     }
 
@@ -178,70 +180,72 @@ class Product_Sales_Countdown_Timer {
      *
      * @return void
     */
-    public function psct_display_countdown_timer() {
-        $date = get_post_meta( get_the_ID(), '_valid_for_date', true );
-        $time = get_post_meta( get_the_ID(), '_valid_for_date_time', true );
-        $text = get_post_meta( get_the_ID(), '_valid_for_timer_text', true );
-        $enable_timer = get_post_meta( get_the_ID(), '_enable_timer', true );
+    public function wpfpct_display_countdown_timer() {
+        $wpfound_date_range         = get_post_meta( get_the_ID(), 'wpfound_date_range', true );
+        $wpfound_date_time          = get_post_meta( get_the_ID(), 'wpfound_date_time', true );
+        $wpfound_timer_heading_text = get_post_meta( get_the_ID(), 'wpfound_timer_heading_text', true );
+        $wpfound_enable_timer       = get_post_meta( get_the_ID(), 'wpfound_enable_timer', true );
 
         ?>
-           <?php if( 'yes' === $enable_timer && ! empty( $date ) ) {
-               ?> <p id="demo"></p><?php
+           <?php if( 'yes' === $wpfound_enable_timer && ! empty( $wpfound_date_range ) ) {
+               ?> 
+                <p id="wpfound_view_timer"></p>
+               <?php
            } ?>
             
             <script>
-                var countDownDate = new Date("<?php echo $date .' '. $time;?>").getTime();
-                var x = setInterval(function() {
-                var now = new Date().getTime();
-                var distance = countDownDate - now;
-                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                var countDownDate = new Date("<?php echo $wpfound_date_range .' '. $wpfound_date_time;?>").getTime();
+                var wpfound_timer = setInterval(function() {
+                    var now = new Date().getTime();
+                    var wpfound_distance = countDownDate - now;
+                    var wpfound_days = Math.floor(wpfound_distance / (1000 * 60 * 60 * 24));
+                    var wpfound_hours = Math.floor((wpfound_distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var wpfound_minutes = Math.floor((wpfound_distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var wpfound_seconds = Math.floor((wpfound_distance % (1000 * 60)) / 1000);
 
-                // Display the result in the element with id="demo"
-                document.getElementById("demo").innerHTML = 
-                    `<div class="psct_countdown_wrap">
-                        <p><?php echo $text; ?></p>
-                    
-                        <div class="psct_countdown_timer">
-                            <span class="psct_countdown-single-item day">
-                                <span class="date">${days}</span>Days
-                            </span>
-                            <span class="psct_countdown-single-item hours">
-                                <span class="date">${hours}</span>Hours
-                            </span>
-                            <span class="psct_countdown-single-item mins">
-                                <span class="date">${minutes}</span>Mins
-                            </span>
-                            <span class="psct_countdown-single-item secs">
-                                <span class="date">${seconds}</span>Secs
-                            </span>
+                    // Display the result in the element with id="demo"
+                    document.getElementById("wpfound_view_timer").innerHTML = 
+                        `<div class="wpfound_countdown_wrap">
+                            <p><?php echo $wpfound_timer_heading_text; ?></p>
+                        
+                            <div class="wpfound_countdown_timer">
+                                <span class="wpfound_countdown-single-item day">
+                                    <span class="date">${wpfound_days}</span>Days
+                                </span>
+                                <span class="wpfound_countdown-single-item hours">
+                                    <span class="date">${wpfound_hours}</span>Hours
+                                </span>
+                                <span class="wpfound_countdown-single-item mins">
+                                    <span class="date">${wpfound_minutes}</span>Mins
+                                </span>
+                                <span class="wpfound_countdown-single-item secs">
+                                    <span class="date">${wpfound_seconds}</span>Secs
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    `
+                        `
 
-                // If the count down is finished, write some text
-                if (distance < 0) {
-                    clearInterval(x);
-                    document.getElementById("demo").innerHTML = "<span class='expire-texxt'><?php esc_html_e('EXPIRED', 'product-sales-countdown-timer'); ?></span>";
-                }
+                    // If the count down is finished, write some text
+                    if (wpfound_distance < 0) {
+                        clearInterval(wpfound_timer);
+                        document.getElementById("wpfound_view_timer").innerHTML = "<span class='wpfound_expire_texxt'><?php esc_html_e('EXPIRED', 'wpf-product-countdown-timer'); ?></span>";
+                    }
                 }, 1000);
             </script>
 
         <?php
     }
 
-
     /**
-     * Add all the enqueue required by the plugin
+     * Add enqueue required by the plugin
      *
      * @since 1.0
      *
      * @return void
      */
-    public function psct_load_enqueue() {
-        wp_enqueue_style( 'woo-countdown-timer-style', PSCT_ASSETS . '/css/style.css' );
+    public function wpfpct_load_enqueue() {
+
+        wp_enqueue_style( 'wpfound-countdown-timer-style', WPFPCT_ASSETS . '/css/style.css' );
         
     }
 
@@ -250,10 +254,12 @@ class Product_Sales_Countdown_Timer {
 /**
  * Init the wperp plugin
  *
- * @return Product_Sales_Countdown_Timer the plugin object
+ * @return WPFound_Product_Countdown_Timer the plugin object
  */
-function psct_product_countdown_timer() {
-    return Product_Sales_Countdown_Timer::init();
+function wpfound_product_countdown_timer() {
+
+    return WPFound_Product_Countdown_Timer::init();
+
 }
 
-psct_product_countdown_timer();
+wpfound_product_countdown_timer();

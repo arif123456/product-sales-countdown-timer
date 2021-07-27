@@ -1,11 +1,11 @@
-.psct_countdown_wrap {
+.wpfound_countdown_wrap {
     margin: 30px 0;
 }
-.psct_countdown_timer {
+.wpfound_countdown_timer {
     display: flex;
 }
 
-.psct_countdown_timer .date {
+.wpfound_countdown_timer .date {
     background: #1f1e1e;
     color: #fff;
     width: 60px;
@@ -20,7 +20,7 @@
     
 }
 
-.psct_countdown_timer .psct_countdown-single-item {
+.wpfound_countdown_timer .wpfound_countdown-single-item {
     padding-right: 14px;
     text-align: center;
     font-size: 13px;
