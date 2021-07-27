@@ -1,6 +1,6 @@
 === Product Sales Countdown Timer ===
 Contributors: Ariful Islam
-Donate link: https://github.com/arif123456/wc-product-countdown
+Donate link: https://github.com/arif123456/product-sales-countdown-timer
 Tags: woocommerce, products, sales, countdown, timer
 Requires at least: 4.0
 Tested up to: 5.6
