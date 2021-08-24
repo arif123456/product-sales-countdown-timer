@@ -3,7 +3,7 @@
  * Plugin Name:       WPF Product Countdown Timer
  * Plugin URI:        https://github.com/arif123456/wpf-product-countdown-timer
  * Description:       WPF Product Countdown Timer plugin helps you display for single product page.
- * Version:           1.0
+ * Version:           1.0.0
  * Author:            WPFound
  * Author             https://github.com/arif123456
  * License:           GPL v2 or later
@@ -128,7 +128,6 @@ class WPFound_Product_Countdown_Timer {
                             'id'				=> 'wpfound_timer_heading_text',
                             'label'				=> __( 'Timer Heading Text', 'wpf-product-countdown-timer' ),
                             'desc_tip'			=> 'true',
-                            'description'		=> __( 'Enter timer header text', 'wpf-product-countdown-timer' ),
                             'type' 				=> 'text',
                         ) );
 
@@ -136,14 +135,12 @@ class WPFound_Product_Countdown_Timer {
                             'id'				=> 'wpfound_date_range',
                             'label'				=> __( 'End Date', 'wpf-product-countdown-timer' ),
                             'desc_tip'			=> 'true',
-                            'description'		=> __( 'Enter the end date here countdown for product sales', 'wpf-product-countdown-timer' ),
                             'type' 				=> 'date',
                         ) );
                         woocommerce_wp_text_input( array(
                             'id'				=> 'wpfound_date_time',
                             'label'				=> __( 'Time', 'wpf-product-countdown-timer' ),
                             'desc_tip'			=> 'true',
-                            'description'		=> __( 'Enter the end date here countdown for product sales', 'wpf-product-countdown-timer' ),
                             'type' 				=> 'time',
                         ) );
 
@@ -194,7 +191,7 @@ class WPFound_Product_Countdown_Timer {
            } ?>
             
             <script>
-                var countDownDate = new Date("<?php echo $wpfound_date_range .' '. $wpfound_date_time;?>").getTime();
+                var countDownDate = new Date("<?php echo esc_js( $wpfound_date_range .' '. $wpfound_date_time );?>").getTime();
                 var wpfound_timer = setInterval(function() {
                     var now = new Date().getTime();
                     var wpfound_distance = countDownDate - now;
@@ -206,7 +203,7 @@ class WPFound_Product_Countdown_Timer {
                     // Display the result in the element with id="demo"
                     document.getElementById("wpfound_view_timer").innerHTML = 
                         `<div class="wpfound_countdown_wrap">
-                            <p><?php echo $wpfound_timer_heading_text; ?></p>
+                            <p><?php echo esc_html( $wpfound_timer_heading_text ); ?></p>
                         
                             <div class="wpfound_countdown_timer">
                                 <span class="wpfound_countdown-single-item day">
