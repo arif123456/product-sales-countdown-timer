@@ -3,9 +3,9 @@
  * Plugin Name:       WPF Product Countdown Timer
  * Plugin URI:        https://github.com/arif123456/wpf-product-countdown-timer
  * Description:       WPF Product Countdown Timer plugin helps you display for single product page.
- * Version:           1.0.0
  * Author:            WPFound
- * Author             https://github.com/arif123456
+ * Author URI         https://github.com/arif123456
+ * Version:           1.0.0
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       wpf-product-countdown-timer
