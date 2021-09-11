@@ -89,6 +89,7 @@ class WPFound_Product_Countdown_Timer {
         add_action( 'woocommerce_process_product_meta', [ $this, 'wpfpct_countdown_timer_save_fields' ] );
         add_action( 'woocommerce_single_product_summary', [ $this, 'wpfpct_display_countdown_timer' ], 20);
         add_action( 'wp_enqueue_scripts', array( $this, 'wpfpct_load_enqueue' ) );
+    
     }
 
     /**
@@ -100,7 +101,7 @@ class WPFound_Product_Countdown_Timer {
     */
     public function wpfpct_countdown_timer_tab( $product_data_tabs ) {
         $product_data_tabs['wpfound_tab'] = array(
-            'label'     =>  __( 'Product Countdown', 'wpf-product-countdown-timer' ),
+            'label'     =>  __( 'Countdown Timer', 'wpf-product-countdown-timer' ),
             'target'    => 'wpfound_tab_settings',
         );
         return $product_data_tabs;
