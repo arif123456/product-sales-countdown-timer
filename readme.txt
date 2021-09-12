@@ -29,7 +29,7 @@ WPF Product Countdown Timer plugin helps you display for single product page.
 * Please make sure that you installed WooCommerce
 * Go to plugins in your dashboard and select “Add New”
 * Search for “WPF Product Countdown Timer”, Install & Activate it
-* When adding/editing the product you can choose the “Product Countdown” tab then add action & time conditional
+* When adding/editing the product you can choose the “Countdown Timer” tab then add action & time conditional
 
 == Screenshots ==
 
