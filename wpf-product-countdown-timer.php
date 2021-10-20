@@ -5,7 +5,7 @@
  * Description:       WPF Product Countdown Timer plugin helps you display for single product page.
  * Author:            WPFound
  * Author URI         https://github.com/arif123456
- * Version:           1.0.0
+ * Version:           1.0.1
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       wpf-product-countdown-timer
@@ -79,7 +79,6 @@ class WPFound_Product_Countdown_Timer {
      * Load all includes file
      *
      * @since 0.0.1
-     * @since 1.0.4 Included erp-helper file
      *
      * @return void
      */
@@ -250,7 +249,7 @@ class WPFound_Product_Countdown_Timer {
 }
 
 /**
- * Init the wperp plugin
+ * Init the wpf countdown timer plugin
  *
  * @return WPFound_Product_Countdown_Timer the plugin object
  */
