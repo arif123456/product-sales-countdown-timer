@@ -225,7 +225,7 @@ class WPFound_Product_Countdown_Timer {
                     // If the count down is finished, write some text
                     if (wpfound_distance < 0) {
                         clearInterval(wpfound_timer);
-                        document.getElementById("wpfound_view_timer").innerHTML = "<span class='wpfound_expire_texxt'><?php esc_html_e('EXPIRED', 'wpf-product-countdown-timer'); ?></span>";
+                        document.getElementById("wpfound_view_timer").innerHTML = "<span class='wpfound_expire_texxt'><?php esc_html_e('DATE EXPIRED', 'wpf-product-countdown-timer'); ?></span>";
                     }
                 }, 1000);
             </script>

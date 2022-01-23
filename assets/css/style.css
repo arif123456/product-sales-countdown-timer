@@ -28,3 +28,11 @@
     color: #1f1e1e;
     text-transform: capitalize;
 }
+
+.wpfound_expire_texxt {
+    display: inline-block;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 700;
+    color: red;
+}
