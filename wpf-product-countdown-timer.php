@@ -5,7 +5,7 @@
  * Description:       WPF Product Countdown Timer plugin helps you display for single product page.
  * Author:            WPFound
  * Author URI         https://github.com/arif123456
- * Version:           1.1.0
+ * Version:           1.1.2
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       wpf-product-countdown-timer
@@ -184,51 +184,59 @@ class WPFound_Product_Countdown_Timer {
         $wpfound_enable_timer       = get_post_meta( get_the_ID(), 'wpfound_enable_timer', true );
 
         ?>
-           <?php if( 'yes' === $wpfound_enable_timer && ! empty( $wpfound_date_range ) ) {
+           <?php if ( 'yes' === $wpfound_enable_timer && ! empty( $wpfound_date_range ) ) {
                ?> 
                 <p id="wpfound_view_timer"></p>
+
+                <script>
+                    window.onload = () => {
+                        wpf_countdown_timer();
+                        function wpf_countdown_timer() {
+                            var countDownDate = new Date("<?php echo esc_js( $wpfound_date_range .' '. $wpfound_date_time );?>").getTime();
+                            var wpfound_timer = setInterval(function() {
+                                var now = new Date().getTime();
+                                var wpfound_distance = countDownDate - now;
+                                var wpfound_days = Math.floor(wpfound_distance / (1000 * 60 * 60 * 24));
+                                var wpfound_hours = Math.floor((wpfound_distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                var wpfound_minutes = Math.floor((wpfound_distance % (1000 * 60 * 60)) / (1000 * 60));
+                                var wpfound_seconds = Math.floor((wpfound_distance % (1000 * 60)) / 1000);
+
+                                // Display the result in the element with id="demo"
+                                var getTimerViewId = document.getElementById("wpfound_view_timer");
+                                getTimerViewId.innerHTML = 
+                                    `<div class="wpfound_countdown_wrap">
+                                        <p><?php echo esc_html( $wpfound_timer_heading_text ); ?></p>
+                                    
+                                        <div class="wpfound_countdown_timer">
+                                            <span class="wpfound_countdown-single-item day">
+                                                <span class="date">${wpfound_days}</span>Days
+                                            </span>
+                                            <span class="wpfound_countdown-single-item hours">
+                                                <span class="date">${wpfound_hours}</span>Hours
+                                            </span>
+                                            <span class="wpfound_countdown-single-item mins">
+                                                <span class="date">${wpfound_minutes}</span>Mins
+                                            </span>
+                                            <span class="wpfound_countdown-single-item secs">
+                                                <span class="date">${wpfound_seconds}</span>Secs
+                                            </span>
+                                        </div>
+                                    </div>`;
+                                
+
+                                // If the count down is finished, write some text
+                                if (wpfound_distance < 0) {
+                                    clearInterval(wpfound_timer);
+                                    document.getElementById("wpfound_view_timer").innerHTML = "<span class='wpfound_expire_texxt'><?php esc_html_e('DATE EXPIRED', 'wpf-product-countdown-timer'); ?></span>";
+                                }
+                            }, 1000);
+                        }
+                        
+                    }
+                    
+                </script>
                <?php
            } ?>
-            
-            <script>
-                var countDownDate = new Date("<?php echo esc_js( $wpfound_date_range .' '. $wpfound_date_time );?>").getTime();
-                var wpfound_timer = setInterval(function() {
-                    var now = new Date().getTime();
-                    var wpfound_distance = countDownDate - now;
-                    var wpfound_days = Math.floor(wpfound_distance / (1000 * 60 * 60 * 24));
-                    var wpfound_hours = Math.floor((wpfound_distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    var wpfound_minutes = Math.floor((wpfound_distance % (1000 * 60 * 60)) / (1000 * 60));
-                    var wpfound_seconds = Math.floor((wpfound_distance % (1000 * 60)) / 1000);
-
-                    // Display the result in the element with id="demo"
-                    document.getElementById("wpfound_view_timer").innerHTML = 
-                        `<div class="wpfound_countdown_wrap">
-                            <p><?php echo esc_html( $wpfound_timer_heading_text ); ?></p>
-                        
-                            <div class="wpfound_countdown_timer">
-                                <span class="wpfound_countdown-single-item day">
-                                    <span class="date">${wpfound_days}</span>Days
-                                </span>
-                                <span class="wpfound_countdown-single-item hours">
-                                    <span class="date">${wpfound_hours}</span>Hours
-                                </span>
-                                <span class="wpfound_countdown-single-item mins">
-                                    <span class="date">${wpfound_minutes}</span>Mins
-                                </span>
-                                <span class="wpfound_countdown-single-item secs">
-                                    <span class="date">${wpfound_seconds}</span>Secs
-                                </span>
-                            </div>
-                        </div>
-                        `
-
-                    // If the count down is finished, write some text
-                    if (wpfound_distance < 0) {
-                        clearInterval(wpfound_timer);
-                        document.getElementById("wpfound_view_timer").innerHTML = "<span class='wpfound_expire_texxt'><?php esc_html_e('DATE EXPIRED', 'wpf-product-countdown-timer'); ?></span>";
-                    }
-                }, 1000);
-            </script>
 
         <?php
     }
