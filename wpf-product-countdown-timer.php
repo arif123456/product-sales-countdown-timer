@@ -208,9 +208,8 @@ class WPFound_Product_Countdown_Timer {
                         <div class="wpf-product-progress-bar-wrap">
                             <div class="wpf-product-progress-bar-fill" style="width:<?php echo floor( $sold_percentage ); ?>%"></div>
                         </div>
-                        <?php if ( $total_sold ) { ?>
                         <div class="woo-sctr-progress-bar-message"><?php echo $total_sold . '/' . $total_stock;  ?> sold</div>
-                        <?php } ?>
+                        
                     </div>
                 <?php } ?>
                 
