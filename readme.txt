@@ -2,12 +2,12 @@
 Contributors: wpfound
 Donate link: https://github.com/ariful93/wpf-product-countdown-timer
 Tags: woocommerce, products, sales, countdown, timer
-Requires at least: 6.1
-Tested up to: 5.8
-WC requires at least: 7.8.1
-WC tested up to: 5.5.2
-Requires PHP: 7.4
-Stable tag: 1.1.3
+Requires at least: 5.4
+Tested up to: 6.2.2
+WC requires at least: 5.0.0
+WC tested up to: 7.8.0
+Requires PHP: 7.2
+Stable tag: 1.1.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
