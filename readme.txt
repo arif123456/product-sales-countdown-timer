@@ -1,13 +1,13 @@
 === WPF Product Countdown Timer ===
 Contributors: wpfound
-Donate link: https://github.com/arif123456/wpf-product-countdown-timer
+Donate link: https://github.com/ariful93/wpf-product-countdown-timer
 Tags: woocommerce, products, sales, countdown, timer
-Requires at least: 4.4
+Requires at least: 6.1
 Tested up to: 5.8
-WC requires at least: 3.0
+WC requires at least: 7.8.1
 WC tested up to: 5.5.2
-Requires PHP: 5.6
-Stable tag: 1.1.2
+Requires PHP: 7.4
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,6 +23,8 @@ WPF Product Countdown Timer plugin helps you display for single product page.
 * Enable/disable
 * Choose the time and date from the visual calendar
 * Allow setting separate time & date range
+* Enable/disable progress bar
+* Add progress bar of the product sold in single page
 
 == Installation ==
 

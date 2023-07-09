@@ -36,3 +36,23 @@
     font-weight: 700;
     color: red;
 }
+
+.wpf-product-progress-bar-container {
+    margin-bottom: 15px;
+
+}
+
+.wpf-product-progress-bar-wrap {
+    height: 12px;
+    border-radius: 20px;
+    background: #eeeeee;
+    width: 100%;
+    overflow: hidden;
+
+}
+
+.wpf-product-progress-bar-fill {
+    background: #ffb600;
+    height: 100%;
+
+}

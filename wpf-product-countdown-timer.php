@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name:       WPF Product Countdown Timer
- * Plugin URI:        https://github.com/arif123456/wpf-product-countdown-timer
+ * Plugin URI:        https://github.com/ariful93/wpf-product-countdown-timer
  * Description:       WPF Product Countdown Timer plugin helps you display for single product page.
  * Author:            WPFound
- * Author URI         https://github.com/arif123456
- * Version:           1.1.2
+ * Author URI         https://github.com/ariful93
+ * Version:           1.1.3
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       wpf-product-countdown-timer
@@ -124,6 +124,11 @@ class WPFound_Product_Countdown_Timer {
                             'label' 	=> __( 'Enable Timer', 'wpf-product-countdown-timer' ),
                         ) );
 
+                        woocommerce_wp_checkbox( array(
+                            'id' 		=> 'wpfound_enable_progress_bar',
+                            'label' 	=> __( 'Enable Progress Bar', 'wpf-product-countdown-timer' ),
+                        ) );
+
                         woocommerce_wp_text_input( array(
                             'id'				=> 'wpfound_timer_heading_text',
                             'label'				=> __( 'Timer Heading Text', 'wpf-product-countdown-timer' ),
@@ -161,12 +166,14 @@ class WPFound_Product_Countdown_Timer {
         $wpfound_date_range             = isset( $_POST[ 'wpfound_date_range' ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wpfound_date_range' ] ) ) : '';
         $wpfound_date_time              = isset( $_POST[ 'wpfound_date_time' ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wpfound_date_time' ] )  ) : '';
         $wpfound_timer_heading_text     = isset( $_POST[ 'wpfound_timer_heading_text' ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wpfound_timer_heading_text' ] )  ) : '';
-        $wpfound_enable_timer           = isset($_POST['wpfound_enable_timer']) ? 'yes' : 'no';
+        $wpfound_enable_timer           = isset( $_POST['wpfound_enable_timer'] ) ? 'yes' : 'no';
+        $wpfound_enable_progress_bar    = isset( $_POST[ 'wpfound_enable_progress_bar' ] ) ? 'yes' : 'no';
 
         update_post_meta( $post_id, 'wpfound_date_range', esc_attr( $wpfound_date_range ) );
         update_post_meta( $post_id, 'wpfound_date_time',  esc_attr( $wpfound_date_time ) );
         update_post_meta( $post_id, 'wpfound_timer_heading_text',  esc_attr( $wpfound_timer_heading_text ) );
         update_post_meta( $post_id, 'wpfound_enable_timer',  esc_attr( $wpfound_enable_timer ) );
+        update_post_meta( $post_id, 'wpfound_enable_progress_bar',  esc_attr( $wpfound_enable_progress_bar ) );
         
     }
 
@@ -182,11 +189,32 @@ class WPFound_Product_Countdown_Timer {
         $wpfound_date_time          = get_post_meta( get_the_ID(), 'wpfound_date_time', true );
         $wpfound_timer_heading_text = get_post_meta( get_the_ID(), 'wpfound_timer_heading_text', true );
         $wpfound_enable_timer       = get_post_meta( get_the_ID(), 'wpfound_enable_timer', true );
+        $wpfound_enable_progress_bar       = get_post_meta( get_the_ID(), 'wpfound_enable_progress_bar', true );
+
+        global $product;
+        $total_sold = $product->get_total_sales();
+        $total_stock = $product->get_stock_quantity();
+
+        if ( $total_stock > 0 ) {
+            $sold_percentage = $total_sold / $total_stock * 100;
+        }
 
         ?>
            <?php if ( 'yes' === $wpfound_enable_timer && ! empty( $wpfound_date_range ) ) {
                ?> 
                 <p id="wpfound_view_timer"></p>
+                <?php if ( 'yes' === $wpfound_enable_progress_bar && $total_stock !== NULL ) { ?>
+                    <div class="wpf-product-progress-bar-container">
+                        <div class="wpf-product-progress-bar-wrap">
+                            <div class="wpf-product-progress-bar-fill" style="width:<?php echo floor( $sold_percentage ); ?>%"></div>
+                        </div>
+                        <?php if ( $total_sold ) { ?>
+                        <div class="woo-sctr-progress-bar-message"><?php echo $total_sold . '/' . $total_stock;  ?> sold</div>
+                        <?php } ?>
+                    </div>
+                <?php } ?>
+                
+                
 
                 <script>
                     window.onload = () => {
