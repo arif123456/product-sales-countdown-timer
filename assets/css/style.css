@@ -1,6 +1,8 @@
 .wpfound_countdown_wrap {
-    margin: 30px 0;
+    margin: 30px 0 16px;
+
 }
+
 .wpfound_countdown_timer {
     display: flex;
 }
@@ -8,8 +10,8 @@
 .wpfound_countdown_timer .date {
     background: #1f1e1e;
     color: #fff;
-    width: 60px;
-    height: 55px;
+    width: 55px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -32,13 +34,13 @@
 .wpfound_expire_texxt {
     display: inline-block;
     margin-bottom: 15px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
     color: red;
 }
 
 .wpf-product-progress-bar-container {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 
 }
 
@@ -55,4 +57,42 @@
     background: #ffb600;
     height: 100%;
 
+}
+
+.offer-title {
+    margin-bottom: 12px;
+
+}
+
+/*========================
+Product page
+========================*/
+/* .wpfund-product-page-timer-wrap .wpfound_countdown_timer .date {
+    background: none;
+    color: #212121;
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+    border-radius: 50%;
+    border: 1px solid #ececec;
+} */
+
+.wpfund-product-page-timer-wrap .wpfound_countdown_wrap {
+    margin: 15px 0;
+}
+
+.wpfund-product-page-timer-wrap p {
+    margin-bottom: 12px;
+
+}
+
+.wpfund-product-page-timer-wrap {
+    text-align: center;
+    padding: 15px 0;
+
+}
+
+.wpfund-product-page-timer-wrap .woo-sctr-progress-bar-message {
+    font-size: 15px;
+    margin-top: 2px;
 }

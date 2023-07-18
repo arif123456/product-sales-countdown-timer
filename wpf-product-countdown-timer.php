@@ -5,7 +5,7 @@
  * Description:       WPF Product Countdown Timer plugin helps you display for single product page.
  * Author:            WPFound
  * Author URI         https://github.com/ariful93
- * Version:           1.1.4
+ * Version:           1.1.5
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       wpf-product-countdown-timer
@@ -87,7 +87,8 @@ class WPFound_Product_Countdown_Timer {
         add_action( 'woocommerce_product_data_panels', [ $this, 'wpfpct_countdown_timer_product_data_panels' ] );
         add_action( 'woocommerce_process_product_meta', [ $this, 'wpfpct_countdown_timer_save_fields' ] );
         add_action( 'woocommerce_single_product_summary', [ $this, 'wpfpct_display_countdown_timer' ], 20);
-        add_action( 'wp_enqueue_scripts', array( $this, 'wpfpct_load_enqueue' ) );
+        add_action( 'woocommerce_after_shop_loop_item', [ $this, 'wpfpct_product_shop_loop_timer' ] );
+        add_action( 'wp_enqueue_scripts', [ $this, 'wpfpct_load_enqueue' ] );
     
     }
 
@@ -177,6 +178,50 @@ class WPFound_Product_Countdown_Timer {
         
     }
 
+    public function wpfpct_product_shop_loop_timer() {
+        global $product;
+
+        $wpfound_date_range         = $product->get_meta( 'wpfound_date_range', true );
+        $wpfound_date_time          = $product->get_meta( 'wpfound_date_time', true );
+        $wpfound_timer_heading_text = $product->get_meta( 'wpfound_timer_heading_text', true );
+        $wpfound_enable_timer       = $product->get_meta( 'wpfound_enable_timer', true );
+        $wpfound_enable_progress_bar       = $product->get_meta( 'wpfound_enable_progress_bar', true );
+       
+        $total_sold = $product->get_total_sales();
+        $total_stock = $product->get_stock_quantity();
+
+        if ( $total_stock > 0 ) {
+            $sold_percentage = $total_sold / $total_stock * 100;
+        }
+
+        ?>
+           <?php if ( 'yes' === $wpfound_enable_timer && ! empty( $wpfound_date_range ) ) {
+               ?> 
+              
+               <div class="wpfund-product-page-timer-wrap">
+
+                    <p><?php echo esc_html( $wpfound_timer_heading_text ); ?></p>
+
+                    <div class="wpfound_shop_page_timer" data-date-range="<?php echo esc_attr( $wpfound_date_range .' '. $wpfound_date_time ); ?>"></div> 
+
+                    <?php if ( 'yes' === $wpfound_enable_progress_bar ) { ?>
+                        <div class="wpf-product-progress-bar-container">
+                            <div class="wpf-product-progress-bar-wrap">
+                                <div class="wpf-product-progress-bar-fill" style="width:<?php echo floor( $sold_percentage ); ?>%"></div>
+                            </div>
+                            <div class="woo-sctr-progress-bar-message"><?php echo $total_sold . '/' . $total_stock;  ?> sold</div>
+                            
+                        </div>
+                    <?php } ?>
+                </div>
+               <?php
+           } ?>
+
+        <?php
+        
+    }
+
+
     /**
      * Display Data Showing Function
      *
@@ -202,7 +247,7 @@ class WPFound_Product_Countdown_Timer {
         ?>
            <?php if ( 'yes' === $wpfound_enable_timer && ! empty( $wpfound_date_range ) ) {
                ?> 
-                <p id="wpfound_view_timer"></p>
+                <div id="wpfound_view_timer"></div>
                 <?php if ( 'yes' === $wpfound_enable_progress_bar && $total_stock !== NULL ) { ?>
                     <div class="wpf-product-progress-bar-container">
                         <div class="wpf-product-progress-bar-wrap">
@@ -213,8 +258,6 @@ class WPFound_Product_Countdown_Timer {
                     </div>
                 <?php } ?>
                 
-                
-
                 <script>
                     window.onload = () => {
                         wpf_countdown_timer();
@@ -232,7 +275,7 @@ class WPFound_Product_Countdown_Timer {
                                 var getTimerViewId = document.getElementById("wpfound_view_timer");
                                 getTimerViewId.innerHTML = 
                                     `<div class="wpfound_countdown_wrap">
-                                        <p><?php echo esc_html( $wpfound_timer_heading_text ); ?></p>
+                                        <p class="offer-title""><?php echo esc_html( $wpfound_timer_heading_text ); ?></p>
                                     
                                         <div class="wpfound_countdown_timer">
                                             <span class="wpfound_countdown-single-item day">
@@ -278,6 +321,8 @@ class WPFound_Product_Countdown_Timer {
     public function wpfpct_load_enqueue() {
 
         wp_enqueue_style( 'wpfound-countdown-timer-style', WPFPCT_ASSETS . '/css/style.css' );
+
+        wp_enqueue_script( 'wpfound-campaign-timer-script', WPFPCT_ASSETS . '/js/campaign-timer.js', array('jquery'), '1.0', true );
         
     }
 

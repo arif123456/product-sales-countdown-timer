@@ -7,7 +7,7 @@ Tested up to: 6.2.2
 WC requires at least: 5.0.0
 WC tested up to: 7.8.0
 Requires PHP: 7.2
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,8 +23,10 @@ WPF Product Countdown Timer plugin helps you display for single product page.
 * Enable/disable
 * Choose the time and date from the visual calendar
 * Allow setting separate time & date range
-* Enable/disable progress bar
+* Enable/disable product sold progress bar
 * Add progress bar of the product sold in single page
+* Add product sold progress product archive page
+* Add countdown timer product archive page
 
 == Installation ==
 
@@ -39,5 +41,6 @@ WPF Product Countdown Timer plugin helps you display for single product page.
 2. Date Settings
 3. Timer Settings
 4. Frontend Veiw
+4. Frontend Product Archive Veiw
 
 
